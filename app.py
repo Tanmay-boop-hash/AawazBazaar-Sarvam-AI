@@ -11,7 +11,7 @@ from statistics import median
 from sarvamai import SarvamAI
 
 ROOT = Path(__file__).resolve().parent
-MAX_REQUEST_BYTES = 18 * 1024 * 1024
+MAX_REQUEST_BYTES = 4 * 1024 * 1024
 LANGUAGE_CODES = {
     "English": "en-IN", "Hindi": "hi-IN", "Tamil": "ta-IN", "Telugu": "te-IN",
     "Bengali": "bn-IN", "Marathi": "mr-IN", "Kannada": "kn-IN", "Gujarati": "gu-IN",
@@ -114,8 +114,8 @@ def transcribe_audio(payload):
         audio_bytes = base64.b64decode(data_url, validate=True)
     except Exception:
         raise ValueError("The audio upload could not be read. Try recording again.")
-    if not audio_bytes or len(audio_bytes) > 12 * 1024 * 1024:
-        raise ValueError("Audio must be non-empty and under 12 MB.")
+    if not audio_bytes or len(audio_bytes) > 3 * 1024 * 1024:
+        raise ValueError("Audio must be non-empty and under 3 MB.")
 
     filename = Path(payload.get("filename") or "recording.webm").name
     suffix = Path(filename).suffix.lower() or ".webm"
